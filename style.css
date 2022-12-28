@@ -686,6 +686,30 @@ display: block;
 .form__section-container{
         padding: 3rem;
     }
+    /* ===============dashboard================= */
+    .dashboard__container{
+        grid-template-columns: 4.3rem auto;
+        padding: 0;;
+        background:transparent;
+    }
+    
+    .dashboard aside h5{
+        display: none;
+    }
+    .dashboard main table thead{
+        display: none;
+    }
+    .dashboard main table tr{
+        display: flex;
+        flex-direction: column;
+    }
+    .dashboard main table tr:nth-child(even){
+        background:var(--color-gray-900);
+
+    }
+    .dashboard main table tr:hover td{
+        background: transparent;
+    }
 
 }
 
@@ -741,6 +765,7 @@ display: block;
 .form__section-container{
     padding: 0rem;
 }
+/* ====================dasboard============ */
 
 
 }
