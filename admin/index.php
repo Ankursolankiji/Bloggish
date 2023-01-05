@@ -30,7 +30,7 @@ include 'partials/header.php';
                 </ul>
             </aside>
             <main>
-<h2>Manage Users</h2>
+<h2>Manage posts</h2>
 <table>
     <thead>
         <tr>

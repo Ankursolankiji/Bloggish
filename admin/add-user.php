@@ -1,5 +1,16 @@
 <?php
 include 'partials/header.php';
+//get back form datai if there was an reg error
+$firstname = $_SESSION['add-user-data']['firstname'] ?? null;
+$lastname = $_SESSION['add-user-data']['lastname'] ?? null;
+$username = $_SESSION['add-user-data']['username'] ?? null;
+$email = $_SESSION['add-user-data']['email'] ?? null;
+$createpassword = $_SESSION['add-user-data']['createpassword'] ?? null;
+$confirmpassword = $_SESSION['add-user-data']['confirmpassword'] ?? null;
+
+//delete signup data
+unset($_SESSION['add-user-data']);
+
 ?>
 
 <body>
@@ -7,36 +18,41 @@ include 'partials/header.php';
 
         <div class="container form__section-container">
             <h2>Add User</h2>
-
-            <div class="alert__message error">
-                <p>invalid</p>
-            </div>
-            <form action="" enctype="multipart/form-data">
-                <input type="text" name="" id="" placeholder="First Name">
-                <input type="text" name="" id="" placeholder="Last Name">
-                <input type="text" name="" id="" placeholder="Username">
-                <input type="text" name="" id="" placeholder="Email">
-                <input type="password" name="" id="" placeholder="Create Password">
-                <input type="text" name="" id="" placeholder="confirm Password">
-                <form action="" enctype="multipart/form-data" class="form__control">
-                    <select name="" id=""
-                    >
-                <option value="0">Author</option>
-            <option value="1">Admin</option>
-            </select>
-            <div class="form__control">
-                    <label for="avatar">User Avatar</label>
-                    <input type="file" name="" id="Avatar">
+            <?php if (isset($_SESSION['add-user'])) : ?>
+                <div class="alert__message error">
+                    <p>
+                        <?= $_SESSION['add-user'];
+                        unset($_SESSION['add-user']) ?>
+                    </p>
                 </div>
-                    
 
-                    <button type="submit" class="btn">Add User</button>
-                  
+            <?php endif ?>
+
+            <form action="<?= ROOT_URL ?>admin/add-user-logic.php" method="post" enctype="multipart/form-data">
+                <input type="text" name="firstname" value="<?= $firstname ?>" placeholder="First Name">
+                <input type="text" name="lastname" value="<?= $lastname ?>" placeholder="Last Name">
+                <input type="text" name="username" value="<?= $username ?>" placeholder="Username">
+                <input type="text" name="email" value="<?= $email ?>" placeholder="Email">
+                <input type="password" name="createpassword" value="<?= $createpassword ?>" placeholder="Create Password">
+                <input type="password" name="confirmpassword" value="<?= $confirmpassword ?>" placeholder="confirm Password">
+                <form action="" enctype="multipart/form-data" class="form__control">
+                    <select name="userrole">
+                        <option value="0">Author</option>
+                        <option value="1">Admin</option>
+                    </select>
+                    <div class="form__control">
+                        <label for="avatar">User Avatar</label>
+                        <input type="file" name="avatar" id="Avatar">
+                    </div>
+
+
+                    <button type="submit" name="submit" class="btn">Add User</button>
+
                 </form>
-                  
+
         </div>
     </section>
 
     <?php
- include '../partials/footer.php'
- ?>
+    include '../partials/footer.php'
+    ?>
