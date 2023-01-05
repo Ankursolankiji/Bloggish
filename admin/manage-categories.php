@@ -1,5 +1,9 @@
 <?php
 include 'partials/header.php';
+
+//fetch  categories from database
+$query = "SELECT * FROM categories ORDER BY title";
+$result = mysqli_query($connection, $query); 
 ?>
 <section class="dashboard">
     <div class="container dashboard__container">
