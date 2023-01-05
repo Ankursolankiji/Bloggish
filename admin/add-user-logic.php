@@ -1,7 +1,6 @@
 <?php
-
 require 'config/database.php';
-//get form data if button was clicked
+//get form data if signup button was clicked
 
 if (isset($_POST['submit'])) {
     $firstname = filter_var($_POST['firstname'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -10,6 +9,7 @@ if (isset($_POST['submit'])) {
     $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
     $createpassword = filter_var($_POST['createpassword'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $confirmpassword = filter_var($_POST['confirmpassword'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    // $is_admin = filter_var($POST['userrole'], FILTER_SANITIZE_NUMBER_INT);
     $is_admin = filter_var($_POST['userrole'], FILTER_SANITIZE_NUMBER_INT);
     $avatar = $_FILES['avatar'];
 
@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
         $_SESSION['add-user'] = "Please add avatar";
     } else {
         if ($createpassword !== $confirmpassword) {
-            $_SESSION['add-user'] = "Password do not match";
+            $_SESSION['signup'] = "Password do not match";
         } else {
             // hash password 
             $hashed_password = password_hash($createpassword, PASSWORD_DEFAULT);
@@ -67,19 +67,20 @@ if (isset($_POST['submit'])) {
     }
 
     if (isset($_SESSION['add-user'])) {
-        // pass form data back to  page on error
+        // pass form data back to signup page on error
         $_SESSION['add-user-data'] = $_POST;
         header('location:' . ROOT_URL . '/admin/add-user.php');
         die();
     } else {
-        
-        $insert_user_query = "INSERT INTO users SET firstname='$firstname', lastname='$lastname' , username='$username', email= '$email', password='$hashed_password', avatar= '$avatar_name', is_admin=-$is_admin";
+        // insert new user into users table 
+        // $insert_user_query = "INSERT INTO users (firstname, lastname, username, email, password, avatar, is_admin) VALUES('$firstname', '$lastname', '$username','$email', '$hashed_password', 'avatar_name', 0";
+        $insert_user_query = "INSERT INTO users SET firstname='$firstname', lastname='$lastname' , username='$username', email= '$email', password='$hashed_password', avatar= '$avatar_name', is_admin=$is_admin";
         $insert_user_result = mysqli_query($connection, $insert_user_query);
 
 
         if (!mysqli_errno($connection)) {
             // redirect to login page with success message
-            $_SESSION['add-user-success'] = "Registration successfull. Please log in";
+            $_SESSION['add-user-success'] = "New user $firstname $lastname added successfully.";
             header('location:' . ROOT_URL . 'admin/manage-users.php');
             die();
         }
