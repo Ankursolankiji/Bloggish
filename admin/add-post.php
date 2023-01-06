@@ -1,40 +1,61 @@
 <?php
 include 'partials/header.php';
+
+//fetch catagories from db
+$query = 'SELECT * FROM categories';
+$categories = mysqli_query($connection, $query);
 ?>
+
 <body>
     <section class="form__section">
+  
 
         <div class="container form__section-container">
             <h2>Add Post</h2>
-
-            <div class="alert__message error">
-                <p>invalid</p>
-            </div>
-            <form action="" enctype="multipart/form-data">
-                <input type="text" name="" id="" placeholder="Title">
-                <select name="" id="">
-                    <option value="1">Travel</option>
-                    <option value="1">Art</option>
-                    <option value="1">Science & Technology</option>
-                    <option value="1">Music</option>
-                    <option value="1">Wild Life</option>
-                    <option value="1">food</option>
-                </select>
-                <textarea name="" id="" rows="10" placeholder="Body"></textarea>
-                <div class="form__control inline">
-                    <input type="checkbox" checked name="" id="is__featured">
-                    <label for="is__featured">Featured</label>
+  <?php if (isset($_SESSION['add-post'])) : ?>
+                <div class="alert__message error">
+                    <p>
+                        <?= $_SESSION['add-post'];
+                        unset($_SESSION['add-post']) ?>
+                    </p>
                 </div>
+
+            <?php endif ?>
+            <!-- <div class="alert__message error">
+                <p>invalid</p>
+            </div> -->
+            <form action="<?= ROOT_URL ?>admin/add-post-logic.php" enctype="multipart/form-data" method="post">
+
+                <input type="text" name="title" value="" placeholder="Title">
+
+                <select name="category" >
+                    <?php while ($category = mysqli_fetch_assoc($categories)) : ?>
+                        <option value="<?= $category['id'] ?>"><?= $category['title'] ?>
+                        </option>
+                    <?php endwhile ?>
+                </select>
+
+                <textarea name="body" value="" rows="10" placeholder="Body"></textarea>
+
+                <?php if (isset($_SESSION['useris_admin'])) : ?>
+                    <div class="form__control inline">
+                        <input type="checkbox" checked name="is_featured" value="1" id="is_featured">
+                        <label for="is_featured">Featured</label>
+                    </div>
+                <?php endif ?>
+
+
                 <div class="form__control">
                     <label for="thumbnail">Add thumbnail</label>
-                    <input type="file" name="" id="thumbnail">
+                    <input type="file" name="thumbnail" id="thumbnail">
                 </div>
-                <button type="submit" class="btn">Add Post</button>
+
+                <button type="submit" name="submit" class="btn">Add Post</button>
 
 
             </form>
         </div>
     </section>
     <?php
- include '../partials/footer.php'
- ?>
+    include '../partials/footer.php'
+    ?>
