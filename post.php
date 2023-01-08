@@ -1,45 +1,47 @@
-  <?php
+<?php
 include 'partials/header.php';
+
+if(isset($_GET['id'])){
+    $id= filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
+    $query = "SELECT * FROM posts WHERE id=$id";
+    $result= mysqli_query($connection, $query);
+    $post= mysqli_fetch_assoc($result);
+} else{
+    header('location: ' . ROOT_URL . 'blog.php');
+    die();
+}
 ?>
+
+
+
+
     <section class="singlepost">
         <div class="container singlepost__container">
-            <h2>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias, facilis debitis.</h2>
+            <h2><?= $post['title'] ?></h2>
             <div class="post__author">
-                <div class="post__author-avatar">
-                    <img src="./images/avatar3.jpg" alt="">
-                </div>
-                <div class="post__author-info">
-                    <h5>By:John miihsra</h5>
-                    <small>July 22, 2022 - 10-60</small>
-                </div>
+                    <?php
+                        $author_id=$post['author_id'];
+                        $author_query= "SELECT * FROM users WHERE id=$author_id";
+                        $author_result= mysqli_query($connection,$author_query);
+                        $author =mysqli_fetch_assoc($author_result);
+                        
+                        ?>
+                       
+                        <div class="post__author-avatar">
+                            <img src="./images/<?= $author['avatar']?>" >
+                        </div>
+                        <div class="post__author-info">
+                        <h5>By: <?= "{$author['firstname']} {$author['lastname']}" ?></h5>
+                            <small><?= date("M d, Y - H:i", strtotime($post['date_time']))?>
+                            </small>
+                        </div>
 
-            </div>
+                    </div>
             <div class="singlepost__thumbnail">
-                <img src="./images/blog22.jpg" alt="">
+                <img src="./images/<?= $post['thumbnail'] ?>">
             </div>
             <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic veritatis laboriosam nesciunt blanditiis
-                mollitia fuga labore totam earum ea. Consectetur nobis inventore expedita porro quos eligendi iure
-                blanditiis at aspernatur iste, a rem aliquam quia quidem, dignissimos non repellat! Deleniti.
-            </p>
-            <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic veritatis laboriosam nesciunt blanditiis
-                mollitia fuga labore totam earum ea. Consectetur nobis inventore expedita porro quos eligendi iure
-                blanditiis at aspernatur iste, a rem aliquam quia quidem, dignissimos non repellat! Deleniti.
-            </p>
-            <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic veritatis laboriosam nesciunt blanditiis
-                mollitia fuga labore totam earum ea. Consectetur nobis inventore expedita porro quos eligendi iure
-                blanditiis at aspernatur iste, a rem aliquam quia quidem, dignissimos non repellat! Deleniti.
-            </p>
-            <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic veritatis laboriosam nesciunt blanditiis
-                mollitia fuga labore totam earum ea. Consectetur nobis inventore expedita porro quos eligendi iure
-                blanditiis at aspernatur iste, a rem aliquam quia quidem, dignissimos non repellat! Deleniti.
-            </p>
-            <p>
-                anditiis mollitia fuga labore totam earum ea. Consectetur nobis inventore expedita porro quos eligendi
-                iure blanditiis at aspernatur iste, a rem aliquam quia quidem, dignissimos non repellat! Deleniti.
+                <?= $post['body'] ?>
             </p>
         </div>
 <!-- ==============================end of singlepost=========================== -->

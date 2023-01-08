@@ -1,5 +1,7 @@
-
-
+<?php
+$query = " SELECT * FROM categories ORDER BY title";
+$categories = mysqli_query($connection, $query);
+?>
 <footer>
     <div class="footer__socials">
         <a href="" target="blank"><i class="uil uil-youtube"></i></a>
@@ -12,25 +14,22 @@
         <article>
             <h4>categories</h4>
             <ul>
-                <li><a href="">Music</a></li>
-                
-                <li><a href="">Wildlife</a></li>
-                <li><a href="">Travel</a></li>
-                <li><a href="">Art</a></li>
-                <li><a href="">Science & Technology</a></li>
-                <li><a href="">Food</a></li>
+
+                <?php while ($category = mysqli_fetch_assoc($categories)): ?>
+                    <li><a href=""><?= $category['title'] ?></a></li>
+                <?php endwhile ?>
             </ul>
         </article>
         <article>
             <h4>Support</h4>
             <ul>
                 <li><a href="">Online Support</a></li>
-                
+
                 <li><a href="">Call Numbers</a></li>
                 <li><a href="">Emails</a></li>
                 <li><a href="">Social Support</a></li>
                 <li><a href="">Location</a></li>
-                
+
             </ul>
         </article>
         <article>
@@ -39,27 +38,27 @@
             </h4>
             <ul>
                 <li><a href="">Safety</a></li>
-                
+
                 <li><a href="">Repair</a></li>
                 <li><a href="">Recent</a></li>
                 <li><a href="">Popular</a></li>
                 <li><a href="">categories</a></li>
-                
+
             </ul>
         </article>
         <article>
             <h4>Permalinks</h4>
             <ul>
-                <li><a href="">Home</a></li>
-                <li><a href="">Blog</a></li>
-                <li><a href="">About</a></li>
-                <li><a href="">Services</a></li>
-                <li><a href="">Contact</a></li>
+                <li><a href="<?= ROOT_URL ?>index.php">Home</a></li>
+                <li><a href="<?= ROOT_URL ?>blog.php">Blog</a></li>
+                <li><a href="<?= ROOT_URL ?>about.php">About</a></li>
+                <li><a href="<?= ROOT_URL ?>services.php">Services</a></li>
+                <li><a href="<?= ROOT_URL ?>contact.php">Contact</a></li>
             </ul>
         </article>
     </div>
     <div class="footer__copyright">
-        <small>Copyright &copy; 2022 Ankur solanki</small>
+        <small>Copyright &copy; 2022 </small>
     </div>
 </footer>
 <!-- ======================== custom javascript===================== -->

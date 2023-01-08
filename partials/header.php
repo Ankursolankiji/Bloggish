@@ -42,11 +42,12 @@ if(isset($_SESSION['user-id'])){
     <ul>
         <li><a href="<?= ROOT_URL ?>admin/index.php">Dashboard</a></li>
         <li><a href="<?= ROOT_URL ?>logout.php">Logout</a></li>
-    </ul>
+        </ul>
 </li>
 </ul>
 <?php else : ?>
 <li><a href="<?= ROOT_URL ?>signin.php">Signin</a></li>
+</ul>
 <?php endif ?>
 
             <button id="open__nav-btn"><i class="uil uil-bars"></i></button>

@@ -8,7 +8,7 @@ $query = "SELECT * FROM users WHERE NOT id=$current_admin_id";
 $users = mysqli_query($connection, $query);
 ?>
 
-<section class="dashboard">
+<section class="dashboard ">
     <?php if (isset($_SESSION['add-user-success'])) : ?>
         <div class="alert__message success container">
             <p>

@@ -8,7 +8,7 @@ $query = "SELECT id, title, category_id FROM posts WHERE author_id=$current_user
 $posts = mysqli_query($connection, $query);
 ?>
 <section class="dashboard">
-    <?php if (isset($_SESSION['add-post-success'])) : ?>
+<?php if (isset($_SESSION['add-post-success'])) : ?>
         <div class="alert__message success container">
             <p>
                 <?= $_SESSION['add-post-success'];
@@ -16,7 +16,31 @@ $posts = mysqli_query($connection, $query);
                 ?>
             </p>
         </div>
-    <?php endif ?>
+        <?php elseif (isset($_SESSION['edit-post-success'])) : ?>
+        <div class="alert__message success container">
+            <p>
+                <?= $_SESSION['edit-post-success'];
+                unset($_SESSION['edit-post-success']);
+                ?>
+            </p>
+        </div>
+        <?php elseif (isset($_SESSION['edit-post'])) : ?>
+        <div class="alert__message error container">
+            <p>
+                <?= $_SESSION['edit-post'];
+                unset($_SESSION['edit-post']);
+                ?>
+            </p>
+        </div>
+        <?php elseif (isset($_SESSION['delete-post-success'])) : ?>
+        <div class="alert__message success container">
+            <p>
+                <?= $_SESSION['delete-post-success'];
+                unset($_SESSION['delete-post-success']);
+                ?>
+            </p>
+        </div>
+        <?php endif ?>
     <div class="container dashboard__container">
         <button id="show__sidebar-btn" class="sidebar__toggle"><i class="uil uil-angle-right-b"></i></button>
         <button id="hide__sidebar-btn" class="sidebar__toggle"><i class="uil uil-angle-left-b"></i></button>
@@ -76,7 +100,7 @@ $posts = mysqli_query($connection, $query);
                     </tbody>
                 </table>
             <?php else : ?>
-                <div class="alert_massage error"><?= "No posts found" ?></div>
+                <div div class="alert__message error container"><?= "No posts found" ?></div>
             <?php endif ?>
 
         </main>
@@ -87,3 +111,4 @@ $posts = mysqli_query($connection, $query);
 <?php
 include '../partials/footer.php'
 ?>
+
